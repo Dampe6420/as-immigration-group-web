@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { site } from '../config/site';
+import { site, withBase } from '../config/site';
 import { routes, type Locale } from '../i18n';
 import type { Dict } from '../i18n/es';
 
@@ -26,7 +26,7 @@ const otherLocale: Locale = locale === 'es' ? 'en' : 'es';
 <header class="site-header">
   <div class="container site-header__inner">
     <a class="brand" href={home} aria-label={`${site.brand} — ${t.nav.home}`}>
-      <img src="/logo.jpeg" alt="" width="1536" height="1024" />
+      <img src={withBase('/logo.jpeg')} alt="" width="1536" height="1024" />
     </a>
 
     <nav class="nav" id="site-nav" aria-label="Principal" data-open="false">

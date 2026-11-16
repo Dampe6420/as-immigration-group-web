@@ -38,5 +38,15 @@ export const site = {
   },
 };
 
-export const whatsappLink = (text?: string) =>
+/**
+ * Antepone el `base` de Astro (p. ej. /as-immigration-group-web en GitHub Pages)
+ * a una ruta interna. Usar siempre para enlaces y recursos que empiezan con "/".
+ * Con dominio propio el base es "/" y esto no cambia nada.
+ */
+export const withBase = (path: string) => {
+  const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+  return `${base}/${path.replace(/^\/+/, '')}`;
+};
+
+export const whatsappLink =(text?: string) =>
   `https://wa.me/${site.contact.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ''}`;
