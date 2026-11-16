@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+import { whatsappLink } from '../config/site';
+import type { Dict } from '../i18n/es';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<a class="wa-float" href={whatsappLink(t.contact.form.messageIntro)} target="_blank" rel="noopener" aria-label={t.cta.whatsapp}>
+  <Icon name="whatsapp" />
+</a>
+
+<style>
+  .wa-float {
+    position: fixed;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #1f9e55;
+    color: var(--white);
+    font-size: 1.7rem;
+    box-shadow: 0 6px 20px rgb(0 0 0 / 0.22);
+    transition: transform 0.2s;
+  }
+  .wa-float:hover {
+    transform: scale(1.06);
+    color: var(--white);
+  }
+  :global(body.nav-open) .wa-float {
+    display: none;
+  }
+</style>

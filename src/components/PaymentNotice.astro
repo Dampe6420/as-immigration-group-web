@@ -1,0 +1,50 @@
+---
+/** Mensaje destacado de facilidades de pago (sección 8). Va en inicio y en servicios. */
+import Icon from './Icon.astro';
+import type { Dict } from '../i18n/es';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<div class="pay-notice">
+  <div class="pay-notice__icon"><Icon name="card" /></div>
+  <p class="pay-notice__text">{t.paymentNotice}</p>
+  <a class="btn btn--light" href="#pagos">{t.cta.payments}</a>
+</div>
+
+<style>
+  .pay-notice {
+    display: grid;
+    gap: 16px;
+    align-items: center;
+    background: linear-gradient(120deg, var(--plum-800), var(--violet-600));
+    color: var(--white);
+    border-radius: var(--radius-lg);
+    padding: clamp(20px, 3.5vw, 32px);
+    box-shadow: var(--shadow);
+  }
+  .pay-notice__icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.14);
+    font-size: 1.4rem;
+  }
+  .pay-notice__text {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  @media (min-width: 820px) {
+    .pay-notice {
+      grid-template-columns: auto 1fr auto;
+      gap: 24px;
+    }
+  }
+</style>

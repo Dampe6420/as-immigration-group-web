@@ -1,0 +1,63 @@
+---
+/**
+ * Aviso sobre el alcance de los servicios (sección 10 de los lineamientos).
+ * Debe aparecer en: pie de página, sección de servicios y sección de contratación.
+ */
+import Icon from './Icon.astro';
+import type { Dict } from '../i18n/es';
+
+interface Props {
+  t: Dict;
+  variant?: 'card' | 'footer';
+}
+const { t, variant = 'card' } = Astro.props;
+---
+
+<aside class:list={['disclaimer', `disclaimer--${variant}`]} aria-label={t.disclaimer.title}>
+  <div class="disclaimer__head">
+    <Icon name="shield" />
+    <strong>{t.disclaimer.title}</strong>
+  </div>
+  <p>{t.disclaimer.p1}</p>
+  <p>{t.disclaimer.p2}</p>
+</aside>
+
+<style>
+  .disclaimer {
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .disclaimer p {
+    margin: 0 0 0.6em;
+  }
+  .disclaimer p:last-child {
+    margin-bottom: 0;
+  }
+  .disclaimer__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.6em;
+    font-size: 1rem;
+  }
+  .disclaimer--card {
+    background: var(--white);
+    border: 1px solid var(--lilac-300);
+    border-left: 4px solid var(--violet-600);
+    padding: clamp(18px, 3vw, 26px);
+    color: var(--ink);
+  }
+  .disclaimer--card .disclaimer__head {
+    color: var(--plum-800);
+  }
+  .disclaimer--footer {
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.18);
+    padding: clamp(16px, 3vw, 22px);
+    color: var(--lilac-100);
+  }
+  .disclaimer--footer .disclaimer__head {
+    color: var(--white);
+  }
+</style>

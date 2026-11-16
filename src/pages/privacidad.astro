@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../config/site';
+
+const B = site.brand;
+// BORRADOR: texto base pendiente de revisión legal antes de publicar (ver DUDAS.md).
+---
+
+<Base title={`Política de privacidad | ${B}`} description={`Cómo ${B} trata los datos personales que nos compartes.`}>
+  <section class="section section--white">
+    <div class="container legal">
+      <p class="draft-banner">
+        <strong>Borrador.</strong> Este texto es una versión preliminar y debe ser revisado por un profesional
+        antes de su publicación definitiva.
+      </p>
+
+      <span class="kicker">Legal</span>
+      <h1>Política de privacidad</h1>
+      <p>Última actualización: pendiente de definir.</p>
+
+      <h2>1. Quiénes somos</h2>
+      <p>
+        {B} presta servicios de apoyo administrativo, preparación documental y gestión de trámites migratorios.
+        Puedes contactarnos en <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a> o al
+        {' '}{site.contact.phoneDisplay}.
+      </p>
+
+      <h2>2. Qué datos recopilamos</h2>
+      <p>
+        <strong>Formulario de contacto inicial:</strong> únicamente tu nombre, teléfono, correo electrónico y el servicio de tu
+        interés.
+      </p>
+      <p>
+        <strong>Durante la prestación del servicio contratado:</strong> la información y los documentos necesarios para preparar
+        tu expediente. Estos se solicitan posteriormente por un canal adecuado para su recepción, nunca a través del formulario
+        del sitio web.
+      </p>
+
+      <h2>3. Para qué usamos tus datos</h2>
+      <ul>
+        <li>Responder tu solicitud de información.</li>
+        <li>Preparar, enviar y radicar el trámite que contrates, a tu nombre y con tu autorización.</li>
+        <li>Entregarte copia del expediente presentado y sus comprobantes.</li>
+        <li>Informarte sobre facilidades de pago y condiciones del servicio.</li>
+      </ul>
+
+      <h2>4. Con quién compartimos tus datos</h2>
+      <p>
+        Solo con las autoridades ante las que se presenta tu trámite y con los proveedores necesarios para su envío o entrega,
+        en la medida en que el servicio contratado lo requiera. No vendemos tus datos personales.
+      </p>
+      <p>
+        El contacto inicial a través del formulario o de WhatsApp se realiza mediante WhatsApp, un servicio de un tercero
+        sujeto a sus propias condiciones y política de privacidad.
+      </p>
+
+      <h2>5. Conservación y seguridad</h2>
+      <p>
+        Conservamos tu información durante el tiempo necesario para prestar el servicio y cumplir obligaciones aplicables,
+        y aplicamos medidas razonables para protegerla.
+      </p>
+
+      <h2>6. Tus derechos</h2>
+      <p>
+        Puedes solicitar acceso, corrección o eliminación de tus datos escribiéndonos a
+        {' '}<a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+      </p>
+
+      <h2>7. Cambios a esta política</h2>
+      <p>Publicaremos en esta página cualquier actualización de esta política.</p>
+    </div>
+  </section>
+</Base>

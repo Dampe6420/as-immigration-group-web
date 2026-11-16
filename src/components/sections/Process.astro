@@ -1,0 +1,118 @@
+---
+import Disclaimer from '../Disclaimer.astro';
+import Icon from '../Icon.astro';
+import type { Dict } from '../../i18n/es';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<section class="section section--white" id="como-funciona">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="kicker">{t.process.kicker}</span>
+      <h2>{t.process.title}</h2>
+      <p class="lead">{t.process.intro}</p>
+    </div>
+
+    <ol class="steps">
+      {
+        t.process.steps.map((s, i) => (
+          <li class="step">
+            <span class="step__num">{i + 1}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="process__foot">
+      <div class="client-role">
+        <h3><Icon name="info" /> {t.process.clientRoleTitle}</h3>
+        <p>{t.process.clientRole}</p>
+      </div>
+      <Disclaimer t={t} />
+      <div class="btn-row process__cta">
+        <a class="btn btn--primary" href="#contacto">{t.cta.check}</a>
+        <a class="btn btn--outline" href="#pagos">{t.cta.payments}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+    counter-reset: step;
+  }
+  .step {
+    position: relative;
+    background: var(--lilac-50);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px 22px 22px;
+  }
+  .step h3 {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    margin: 14px 0 0.4em;
+  }
+  .step p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+  .step__num {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--plum-700);
+    color: var(--white);
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+  .process__foot {
+    display: grid;
+    gap: 20px;
+    margin-top: clamp(32px, 5vw, 48px);
+  }
+  .client-role {
+    background: var(--lilac-100);
+    border-radius: var(--radius);
+    padding: clamp(18px, 3vw, 26px);
+  }
+  .client-role h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    margin-bottom: 0.5em;
+  }
+  .client-role p {
+    margin: 0;
+  }
+  .process__cta {
+    justify-content: center;
+  }
+  @media (min-width: 640px) {
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1000px) {
+    .steps {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

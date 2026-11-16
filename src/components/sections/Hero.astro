@@ -1,0 +1,117 @@
+---
+import Icon from '../Icon.astro';
+import PaymentNotice from '../PaymentNotice.astro';
+import { site, whatsappLink } from '../../config/site';
+import type { Dict } from '../../i18n/es';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<section class="hero" id="inicio">
+  <div class="container">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <span class="kicker">{t.hero.eyebrow}</span>
+        <h1>{t.hero.title}</h1>
+        <p class="lead">{t.hero.lead}</p>
+        <p class="hero__closing">{t.hero.closing}</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="#contacto">{t.cta.check} <Icon name="arrow" /></a>
+          <a class="btn btn--outline" href={whatsappLink(t.contact.form.messageIntro)} target="_blank" rel="noopener">{t.cta.info}</a>
+        </div>
+      </div>
+
+      <div class="hero__card">
+        <img src="/logo.jpeg" alt={`${site.brand} — ${site.owner}`} width="1536" height="1024" />
+        <ul>
+          {
+            t.hero.highlights.map((h) => (
+              <li>
+                <span class="hero__check"><Icon name="check" /></span>
+                {h}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="hero__pay">
+      <PaymentNotice t={t} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: clamp(40px, 7vw, 88px) clamp(48px, 7vw, 80px);
+    background:
+      radial-gradient(1000px 500px at 85% -10%, var(--lilac-200), transparent 60%),
+      radial-gradient(700px 400px at -10% 110%, var(--lilac-100), transparent 60%),
+      var(--lilac-50);
+    overflow: hidden;
+  }
+  .hero__grid {
+    display: grid;
+    gap: clamp(28px, 5vw, 56px);
+    align-items: center;
+  }
+  .hero__copy h1 {
+    margin-bottom: 0.45em;
+  }
+  .hero__closing {
+    font-weight: 700;
+    color: var(--plum-700);
+    margin-bottom: 1.6em;
+  }
+  .hero__card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(20px, 3vw, 32px);
+    box-shadow: var(--shadow);
+  }
+  .hero__card img {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto 12px;
+  }
+  .hero__card ul {
+    list-style: none;
+    margin: 0;
+    padding: 16px 0 0;
+    border-top: 1px solid var(--lilac-100);
+    display: grid;
+    gap: 12px;
+  }
+  .hero__card li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-weight: 600;
+    color: var(--plum-800);
+  }
+  .hero__check {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--lilac-100);
+    color: var(--violet-600);
+    font-size: 0.9rem;
+  }
+  .hero__pay {
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+  @media (min-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1.25fr 1fr;
+    }
+  }
+</style>

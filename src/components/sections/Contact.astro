@@ -1,0 +1,245 @@
+---
+import Icon from '../Icon.astro';
+import { site, whatsappLink } from '../../config/site';
+import { routes, type Locale } from '../../i18n';
+import type { Dict } from '../../i18n/es';
+
+interface Props {
+  t: Dict;
+  locale: Locale;
+}
+const { t, locale } = Astro.props;
+const f = t.contact.form;
+const services = t.services.groups.flatMap((g) => g.items.map((s) => s.title));
+---
+
+<section class="section section--tint" id="contacto">
+  <div class="container contact">
+    <div>
+      <span class="kicker">{t.contact.kicker}</span>
+      <h2>{t.contact.title}</h2>
+      <p class="lead">{t.contact.intro}</p>
+
+      <ul class="channels">
+        <li>
+          <a class="channel" href={whatsappLink(f.messageIntro)} target="_blank" rel="noopener">
+            <span class="channel__icon channel__icon--wa"><Icon name="whatsapp" /></span>
+            <span><small>{t.contact.channels.whatsapp}</small>{site.contact.phoneDisplay}</span>
+          </a>
+        </li>
+        <li>
+          <a class="channel" href={`tel:${site.contact.phoneHref}`}>
+            <span class="channel__icon"><Icon name="phone" /></span>
+            <span><small>{t.contact.channels.phone}</small>{site.contact.phoneDisplay}</span>
+          </a>
+        </li>
+        <li>
+          <a class="channel" href={`mailto:${site.contact.email}`}>
+            <span class="channel__icon"><Icon name="mail" /></span>
+            <span><small>{t.contact.channels.email}</small>{site.contact.email}</span>
+          </a>
+        </li>
+      </ul>
+      <p class="hours">{site.contact.hours}</p>
+    </div>
+
+    <!--
+      Formulario de contacto inicial: SOLO nombre, teléfono, correo y servicio (lineamientos §9).
+      Sin backend por ahora: arma un mensaje y abre WhatsApp. Ver DUDAS.md.
+    -->
+    <form
+      class="contact-form"
+      id="contact-form"
+      novalidate
+      data-wa={site.contact.whatsapp}
+      data-intro={f.messageIntro}
+      data-l-name={f.name}
+      data-l-phone={f.phone}
+      data-l-email={f.email}
+      data-l-service={f.service}
+    >
+      <h3>{f.title}</h3>
+
+      <div class="field">
+        <label for="cf-name">{f.name}</label>
+        <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength="120" />
+      </div>
+      <div class="field">
+        <label for="cf-phone">{f.phone}</label>
+        <input id="cf-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="30" />
+      </div>
+      <div class="field">
+        <label for="cf-email">{f.email}</label>
+        <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength="160" />
+      </div>
+      <div class="field">
+        <label for="cf-service">{f.service}</label>
+        <select id="cf-service" name="service" required>
+          <option value="" disabled selected>{f.servicePlaceholder}</option>
+          {services.map((s) => <option value={s}>{s}</option>)}
+          <option value={f.serviceOther}>{f.serviceOther}</option>
+        </select>
+      </div>
+
+      <p class="form-note">
+        {f.privacyNote} <a href={routes[locale].privacy}>{f.privacyLink}</a>.
+      </p>
+
+      <button class="btn btn--primary form-submit" type="submit">
+        <Icon name="whatsapp" />
+        {f.submit}
+      </button>
+      <p class="form-status" role="status" aria-live="polite" hidden>{f.sent}</p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Validación nativa con mensajes del navegador.
+      if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        form.reportValidity();
+        return;
+      }
+      const d = form.dataset;
+      const data = new FormData(form);
+      const text = [
+        d.intro,
+        `${d.lName}: ${data.get('name')}`,
+        `${d.lPhone}: ${data.get('phone')}`,
+        `${d.lEmail}: ${data.get('email')}`,
+        `${d.lService}: ${data.get('service')}`,
+      ].join('\n');
+      window.open(`https://wa.me/${d.wa}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+      const status = form.querySelector<HTMLElement>('.form-status');
+      if (status) status.hidden = false;
+    });
+  }
+</script>
+
+<style>
+  .contact {
+    display: grid;
+    gap: clamp(28px, 5vw, 56px);
+    align-items: start;
+  }
+  .channels {
+    list-style: none;
+    margin: 1.6em 0 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+  .channel {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+  .channel:hover {
+    border-color: var(--violet-500);
+    color: var(--plum-800);
+  }
+  .channel small {
+    display: block;
+    font-weight: 400;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+  }
+  .channel__icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--lilac-100);
+    color: var(--violet-600);
+    font-size: 1.2rem;
+  }
+  .channel__icon--wa {
+    background: #e3f5ea;
+    color: #1f9e55;
+  }
+  .hours {
+    margin-top: 14px;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+
+  .contact-form {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(22px, 4vw, 36px);
+    box-shadow: var(--shadow);
+    display: grid;
+    gap: 16px;
+  }
+  .contact-form h3 {
+    margin: 0;
+  }
+  .field {
+    display: grid;
+    gap: 6px;
+  }
+  .field label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--plum-800);
+  }
+  .field input,
+  .field select {
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 14px;
+    font: inherit;
+    font-size: 1rem; /* evita zoom automático en iOS */
+    color: var(--ink);
+    background: var(--lilac-50);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+  }
+  .field input:focus,
+  .field select:focus {
+    outline: none;
+    border-color: var(--violet-500);
+    box-shadow: 0 0 0 3px rgb(155 77 187 / 0.2);
+    background: var(--white);
+  }
+  .was-validated :is(input, select):invalid {
+    border-color: #b3261e;
+  }
+  .form-note {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .form-submit {
+    width: 100%;
+  }
+  .form-status {
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: #e3f5ea;
+    color: #14532d;
+    font-size: 0.95rem;
+  }
+  @media (min-width: 900px) {
+    .contact {
+      grid-template-columns: 1fr 1.05fr;
+    }
+  }
+</style>

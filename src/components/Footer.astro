@@ -1,0 +1,117 @@
+---
+import Disclaimer from './Disclaimer.astro';
+import Icon from './Icon.astro';
+import { site, whatsappLink } from '../config/site';
+import { routes, type Locale } from '../i18n';
+import type { Dict } from '../i18n/es';
+
+interface Props {
+  t: Dict;
+  locale: Locale;
+}
+const { t, locale } = Astro.props;
+const r = routes[locale];
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <p class="site-footer__name">{site.brand}</p>
+        <p class="site-footer__owner">{site.owner} · {site.tagline}</p>
+      </div>
+      <ul class="site-footer__contact">
+        <li>
+          <a href={whatsappLink()} target="_blank" rel="noopener"><Icon name="whatsapp" /> {t.contact.channels.whatsapp}</a>
+        </li>
+        <li>
+          <a href={`tel:${site.contact.phoneHref}`}><Icon name="phone" /> {site.contact.phoneDisplay}</a>
+        </li>
+        <li>
+          <a href={`mailto:${site.contact.email}`}><Icon name="mail" /> {site.contact.email}</a>
+        </li>
+      </ul>
+    </div>
+
+    <Disclaimer t={t} variant="footer" />
+
+    <div class="site-footer__bottom">
+      <p>© {year} {site.brand}. {t.footer.rights}</p>
+      <nav aria-label="Legal">
+        <a href={r.privacy}>{t.footer.privacy}</a>
+        <a href={r.terms}>{t.footer.terms}</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--plum-900);
+    color: var(--lilac-200);
+    padding-block: clamp(44px, 7vw, 72px) 28px;
+    /* espacio para el botón flotante de WhatsApp en móvil */
+    padding-bottom: calc(28px + env(safe-area-inset-bottom));
+  }
+  .site-footer a {
+    color: var(--lilac-100);
+    text-decoration: none;
+  }
+  .site-footer a:hover {
+    color: var(--white);
+    text-decoration: underline;
+  }
+  .site-footer__top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+  .site-footer__name {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: var(--white);
+    margin: 0;
+    line-height: 1.2;
+  }
+  .site-footer__owner {
+    margin: 4px 0 0;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--lilac-300);
+  }
+  .site-footer__contact {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .site-footer__contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    overflow-wrap: anywhere;
+  }
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    font-size: 0.9rem;
+  }
+  .site-footer__bottom p {
+    margin: 0;
+  }
+  .site-footer__bottom nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+</style>

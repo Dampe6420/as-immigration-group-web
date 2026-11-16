@@ -1,0 +1,134 @@
+---
+import Disclaimer from '../Disclaimer.astro';
+import PaymentNotice from '../PaymentNotice.astro';
+import Icon from '../Icon.astro';
+import type { Dict } from '../../i18n/es';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<section class="section" id="servicios">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">{t.services.kicker}</span>
+      <h2>{t.services.title}</h2>
+      <p class="lead">{t.services.intro}</p>
+    </div>
+
+    <nav class="svc-index" aria-label={t.services.title}>
+      {t.services.groups.map((g) => <a href={`#${g.id}`}>{g.title}</a>)}
+    </nav>
+
+    <div class="svc-groups">
+      {
+        t.services.groups.map((g) => (
+          <section class="svc-group" id={g.id} aria-labelledby={`${g.id}-title`}>
+            <h3 class="svc-group__title" id={`${g.id}-title`}>{g.title}</h3>
+            <div class:list={['grid', g.items.length > 1 && 'grid--2']}>
+              {g.items.map((s) => (
+                <article class="card svc" id={s.id}>
+                  <h4>{s.title}</h4>
+                  {s.paragraphs.map((p) => (
+                    <p>{p}</p>
+                  ))}
+                  <a class="svc__link" href="#contacto">
+                    {t.cta.info} <Icon name="arrow" />
+                  </a>
+                </article>
+              ))}
+            </div>
+            {'note' in g && g.note && (
+              <p class="svc-group__note">
+                <Icon name="info" />
+                <span>{g.note}</span>
+              </p>
+            )}
+          </section>
+        ))
+      }
+    </div>
+
+    <div class="svc-footer">
+      <PaymentNotice t={t} />
+      <Disclaimer t={t} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .svc-index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: clamp(28px, 4vw, 44px);
+  }
+  .svc-index a {
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--plum-700);
+  }
+  .svc-index a:hover {
+    border-color: var(--violet-500);
+    background: var(--lilac-100);
+  }
+  .svc-groups {
+    display: grid;
+    gap: clamp(36px, 5vw, 56px);
+  }
+  .svc-group__title {
+    font-size: clamp(1.5rem, 2.8vw, 1.95rem);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--lilac-300);
+  }
+  .svc {
+    display: flex;
+    flex-direction: column;
+  }
+  .svc h4 {
+    font-family: var(--font-sans);
+    font-size: 1.12rem;
+    color: var(--plum-800);
+    margin: 0 0 0.75em;
+  }
+  .svc p {
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+  .svc__link {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .svc-group__note {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin: 18px 0 0;
+    padding: 16px 18px;
+    border-radius: var(--radius);
+    background: var(--lilac-100);
+    color: var(--plum-800);
+    font-size: 0.98rem;
+  }
+  .svc-group__note :global(.icon) {
+    margin-top: 3px;
+    color: var(--violet-600);
+  }
+  .svc-footer {
+    display: grid;
+    gap: 20px;
+    margin-top: clamp(40px, 6vw, 64px);
+  }
+</style>

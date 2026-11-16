@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import { site } from '../config/site';
+import { getDict } from '../i18n';
+
+const t = getDict('es');
+const B = site.brand;
+// BORRADOR: texto base pendiente de revisión legal antes de publicar (ver DUDAS.md).
+---
+
+<Base title={`Condiciones del servicio | ${B}`} description={`Condiciones generales de los servicios de ${B}.`}>
+  <section class="section section--white">
+    <div class="container legal">
+      <p class="draft-banner">
+        <strong>Borrador.</strong> Este texto es una versión preliminar y debe ser revisado por un profesional
+        antes de su publicación definitiva.
+      </p>
+
+      <span class="kicker">Legal</span>
+      <h1>Condiciones del servicio</h1>
+      <p>Última actualización: pendiente de definir.</p>
+
+      <h2>1. Alcance del servicio</h2>
+      <Disclaimer t={t} />
+
+      <h2>2. Qué incluye</h2>
+      <p>
+        Según el servicio contratado: solicitud de información y documentos, preparación y organización documental,
+        diligenciamiento de formularios con la información proporcionada por el cliente, envío, entrega y radicación mediante
+        los canales habilitados por la autoridad, y entrega de copia digital completa del expediente presentado con sus
+        comprobantes.
+      </p>
+
+      <h2>3. Responsabilidades del cliente</h2>
+      <ul>
+        <li>Aportar información veraz y completa.</li>
+        <li>Revisar y firmar o autorizar los documentos que correspondan.</li>
+        <li>Realizar las confirmaciones personales exigidas por las plataformas.</li>
+        <li>Asistir a biometría, entrevistas, citas o audiencias.</li>
+        <li>Pagar las tarifas oficiales y cargos que exija la autoridad, según los valores vigentes en la fecha de presentación.</li>
+      </ul>
+
+      <h2>4. Comprobantes y recibos</h2>
+      <p>
+        El comprobante de envío o entrega demuestra que la documentación fue enviada o entregada. El recibo o constancia oficial
+        de aceptación o radicación lo emite la autoridad en sus propios tiempos, y se entrega al cliente cuando sea emitido y
+        esté disponible.
+      </p>
+
+      <h2>5. Honorarios, tarifas oficiales y otros costos</h2>
+      <p>
+        Los honorarios de {B} son independientes de las tarifas oficiales, los gastos de envío y otros costos que puedan
+        aplicar. Contamos con facilidades de pago; las condiciones se informan por separado para cada trámite.
+      </p>
+
+      <h2>6. Resultados</h2>
+      <p>
+        Las decisiones, citas y tiempos de respuesta dependen de las autoridades competentes. La presentación de una solicitud
+        no garantiza que la autoridad apruebe lo solicitado.
+      </p>
+    </div>
+  </section>
+</Base>
