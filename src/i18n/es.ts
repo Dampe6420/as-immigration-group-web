@@ -5,7 +5,7 @@ const B = site.brand;
 /**
  * Textos del sitio en español (idioma principal).
  * Los textos marcados con «literal» provienen del documento de lineamientos
- * (docs/lineamientos.md) y no deben reescribirse sin aprobación del cliente.
+ * (documento de la clienta, solo en local) y no deben reescribirse sin aprobación del cliente.
  */
 export const es = {
   meta: {

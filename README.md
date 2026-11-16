@@ -2,7 +2,7 @@
 
 Sitio informativo de servicios de apoyo administrativo y preparación documental para trámites migratorios, dirigido a la comunidad latina en Estados Unidos.
 
-- **Lineamientos del cliente:** [`docs/lineamientos.md`](docs/lineamientos.md) (convertido del PDF original en `docs/`).
+- Los lineamientos y documentos de trabajo con la clienta se mantienen solo en local (`docs/privado/`, fuera del repositorio).
 
 ## Stack
 
